@@ -9,14 +9,15 @@ export XDG_CONFIG_HOME=$HOME/.config
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-PS1='[\u@\h \W]\$ '
+alias update-system='sudo guix system -L ~/projects/personal/public/guix-setup reconfigure ~/projects/personal/public/guix-setup/guix-config/systems/$(hostname).scm'
+alias update-home='guix home -L ~/projects/personal/public/guix-setup reconfigure ~/projects/personal/public/guix-setup/guix-config/home/home-config.scm'
+# PS1='[\u@\h \W]\$ '
 
 source /usr/share/git/git-prompt.sh
 
 export PS1='\n\u@\h \[\e[32m\]\w \[\e[91m\]$(__git_ps1)\[\e[00m\]\n$ '
 
-export QSYS_ROOTDIR="/home/jaha/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/23.1/quartus/sopc_builder/bin"
-
+# hopefully remove it later
 export JAVA_HOME=/usr/lib/jvm/java-22-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
