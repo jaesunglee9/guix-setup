@@ -4,13 +4,10 @@
 ;; base is minimal config upon build other more complex machine specification
 ;; example: (inherit (base-system))
 
-(define-module (guix-config systems base)
-  #:use-modules (gnu)
-  #:export (base-system terminal-system))
-
-
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
+(use-modules (gnu)
+             (guix))
 (use-service-modules cups desktop networking ssh xorg)
 
 (define base-system

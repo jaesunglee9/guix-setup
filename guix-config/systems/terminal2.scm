@@ -2,10 +2,10 @@
 
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
-(define-module (guix-config systems terminal2)
-  #:use-modules (gnu)
-  #:use-modules (nongnu packages linux)
-  #:use-modules (guix-config systems base))
+
+(include "./base.scm")
+
+(use-modules (gnu) (nongnu packages linux) (guix))
 
 (use-service-modules cups desktop networking ssh xorg)
 
