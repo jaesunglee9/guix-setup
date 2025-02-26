@@ -50,7 +50,7 @@
     (bootloader (bootloader-configuration
               (bootloader grub-bootloader)
               (targets (list "/dev/sdb"))
-              (keyboard-layout (operating-system-keyboard-layout terminal-system))))
+              (keyboard-layout keyboard-layout)))
 
     ;; The list of file systems that get "mounted".  The unique
     ;; file system identifiers there ("UUIDs") can be obtained
