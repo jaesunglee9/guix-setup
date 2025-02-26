@@ -12,7 +12,7 @@
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
 (use-modules (gnu) (nongnu packages linux) (guix))
-(use-service-modules cups desktop networking ssh xorg)
+(use-service-modules cups desktop networking ssh xorg sddm)
 
 ;; Not meant to be used on its own.
 (define base-system
