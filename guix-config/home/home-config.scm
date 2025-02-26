@@ -4,12 +4,13 @@
 ;; need to capture the channels being used, as returned by "guix describe".
 ;; See the "Replicating Guix" section in the manual.
 
-(use-modules (gnu home)
-             (gnu packages)
-             (gnu services)
-             (guix gexp)
-             (gnu home services shells)
-             (gnu home services dotfiles))
+(define-module (guix-config home home-config)
+  #:use-module (gnu home)
+  #:use-module (gnu packages)
+  #:use-module (gnu services)
+  #:use-module (guix gexp)
+  #:use-module (gnu home services shells)
+  #:use-module (gnu home services dotfiles))
 
 (home-environment
   ;; Below is the list of packages that will show up in your
