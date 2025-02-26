@@ -51,12 +51,22 @@
 (define terminal-system
   (operating-system
     (inherit base-system)
+    (packages
+     (append
+      (operating-system-packages base-system)
+      (specifications->packages (list "plasma-desktop" "sddm"))))
+
     (services
      (append
       (operating-system-services base-system)
       (list
         (service cups-service-type)
+        (service sddm-service-type
+          (sddm-configuration
+            (default-session "plasma.desktop")
+            (theme "breeze")))
         (set-xorg-configuration
-          (xorg-configuration (keyboard-layout (operating-system-keyboard-layout base-system)))))
+          (xorg-configuration
+            (keyboard-layout (operating-system-keyboard-layout base-system)))))
       %desktop-services))))
 
