@@ -72,16 +72,13 @@
     (packages
      (append
       (operating-system-packages base-system)
-      (specifications->packages (list "plasma-desktop" "sddm"))))
+      (specifications->packages (list "plasma-desktop"))))
 
     (services
      (append
       (operating-system-services base-system)
       (list
         (service cups-service-type)
-        (service sddm-service-type
-          (sddm-configuration
-            (theme "breeze")))
         (set-xorg-configuration
           (xorg-configuration
             (keyboard-layout (operating-system-keyboard-layout base-system)))))
