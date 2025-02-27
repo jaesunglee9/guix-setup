@@ -81,7 +81,6 @@
         (service cups-service-type)
         (service sddm-service-type
           (sddm-configuration
-            (default-session "plasma.desktop")
             (theme "breeze")))
         (set-xorg-configuration
           (xorg-configuration
