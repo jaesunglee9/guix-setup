@@ -44,9 +44,9 @@
         ;; To configure OpenSSH, pass an 'openssh-configuration'
         ;; record as a second argument to 'service' below.
         (service openssh-service-type))
-    ;; This is the default list of services we
-    ;; are appending to.
-    %base-services))
+      ;; This is the default list of services we
+      ;; are appending to.
+      %base-services))
     (bootloader (bootloader-configuration
               (bootloader grub-bootloader)
               (targets (list "/dev/sdb"))
@@ -76,8 +76,9 @@
 
     (services
      (append
-      (operating-system-services base-system)
+      ;; (operating-system-services base-system)
       (list
+        (service openssh-service-type)
         (service cups-service-type)
         (set-xorg-configuration
           (xorg-configuration
