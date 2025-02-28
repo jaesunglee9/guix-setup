@@ -24,8 +24,6 @@ export PATH=$JAVA_HOME/bin:$PATH
 export RISCV=/opt/riscv
 export PATH=$RISCV/bin:$PATH
 
-[ -f "/home/jaha/.ghcup/env" ] && . "/home/jaha/.ghcup/env" # ghcup-env
-
 # Automatically added by the Guix install script.
 if [ -n "$GUIX_ENVIRONMENT" ]; then
     if [[ $PS1 =~ (.*)"\\$" ]]; then
