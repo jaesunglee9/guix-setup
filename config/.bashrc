@@ -11,11 +11,11 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias update-system='sudo guix system -L ~/projects/personal/public/guix-setup reconfigure ~/projects/personal/public/guix-setup/guix-config/systems/$(hostname).scm'
 alias update-home='guix home -L ~/projects/personal/public/guix-setup reconfigure ~/projects/personal/public/guix-setup/guix-config/home/home-config.scm'
-PS1='[\u@\h \W]\$ '
+# PS1='[\u@\h \W]\$ '
 
-# source /usr/share/git/git-prompt.sh
+source ~/.guix-home/profile/bin/git-prompt
 
-# export PS1='\n\u@\h \[\e[32m\]\w \[\e[91m\]$(__git_ps1)\[\e[00m\]\n$ '
+export PS1='\n\u@\h \[\e[32m\]\w \[\e[91m\]$(__git_ps1)\[\e[00m\]\n$ '
 
 if [ -d "$HOME/.guix-home/profile/bin" ]; then
 	export PATH="$HOME/.guix-home/profile/bin:$PATH"
