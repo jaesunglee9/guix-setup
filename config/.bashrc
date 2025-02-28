@@ -11,11 +11,19 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias update-system='sudo guix system -L ~/projects/personal/public/guix-setup reconfigure ~/projects/personal/public/guix-setup/guix-config/systems/$(hostname).scm'
 alias update-home='guix home -L ~/projects/personal/public/guix-setup reconfigure ~/projects/personal/public/guix-setup/guix-config/home/home-config.scm'
-# PS1='[\u@\h \W]\$ '
+PS1='[\u@\h \W]\$ '
 
-source /usr/share/git/git-prompt.sh
+# source /usr/share/git/git-prompt.sh
 
-export PS1='\n\u@\h \[\e[32m\]\w \[\e[91m\]$(__git_ps1)\[\e[00m\]\n$ '
+# export PS1='\n\u@\h \[\e[32m\]\w \[\e[91m\]$(__git_ps1)\[\e[00m\]\n$ '
+
+if [ -d "$HOME/.guix-home/profile/bin" ]; then
+	export PATH="$HOME/.guix-home/profile/bin:$PATH"
+fi
+
+if [ -d "$HOME/.guix-home/profile/share/info" ]; then
+	export INFOPATH="$HOME/.guix-home/profile/share/info:$INFOPATH"
+fi
 
 # hopefully remove it later
 export JAVA_HOME=/usr/lib/jvm/java-22-openjdk

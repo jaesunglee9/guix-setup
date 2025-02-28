@@ -47,6 +47,9 @@
 ;;(unless (package-installed-p 'use-package)
 ;;  (package-install 'use-package))
 
+(add-to-list 'load-path "/home/user0/.guix-home/profile/share/emacs/site-lisp")
+(guix-emacs-autoload-packages)
+
 (require 'use-package) ;; since guix takes care of packages, no need for :ensure t
 
 ;; packages.el
