@@ -69,15 +69,17 @@
 (define terminal-system
   (operating-system
     (inherit base-system)
+
     (packages
      (append
       (operating-system-packages base-system)
-      (specifications->packages (list "plasma-desktop"))))
+      (specifications->packages (list "qutebrowser"))))
 
     (services
      (append
       ;; (operating-system-services base-system)
       (list
+        (service plasma-desktop-service-type)
         (service openssh-service-type)
         (service cups-service-type)
         (set-xorg-configuration
