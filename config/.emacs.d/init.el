@@ -12,6 +12,15 @@
 (set-fringe-mode 10) ; Give some breathing room
 (set-face-attribute 'default nil :height 120)
 
+(column-number-mode)
+(global-display-line-numbers-mode t)
+;;Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+		term-mode-hook
+		shell-mode-hook
+		eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
 ;; (set-face-font 'variable-pitch "EtBembo")
 ;; (setq-default line-spacing 0.1)
 
@@ -38,16 +47,7 @@
 ;;(unless (package-installed-p 'use-package)
 ;;  (package-install 'use-package))
 
-(require 'use-package)
-
-(column-number-mode)
-(global-display-line-numbers-mode t)
-;;Disable line numbers for some modes
-(dolist (mode '(org-mode-hook
-		term-mode-hook
-		shell-mode-hook
-		eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+(require 'use-package) ;; since guix takes care of packages, no need for :ensure t
 
 ;; packages.el
 (with-eval-after-load 'org
@@ -104,23 +104,19 @@
   ([remap describe-key] . helpful-key))
 
 ;; paredit
-(require 'paredit)
-(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook #'enable-paredit-mode)
+(use-package paredit
+  :hook ((emacs-lisb-mode
+          eval-expression-minibuffer-setup
+          ielm-mode
+          lisp-mode
+          lisp-interaction-mode
+          scheme-mode). enable-paredit-mode))
 
 ;; make eldoc paredit aware
-(require 'eldoc)
-(eldoc-add-command
- 'paredit-backward-delete
- 'paredit-close-round)
-
-(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
-(add-hook 'ielm-mode-hook 'eldoc-mode)
+(use-package eldoc
+  :hook ((emacs-lisp-mode lisp-interaction-mode ielm-mode) . eldoc-mode)
+  :config
+  (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
 
 ;(custom-set-faces
 ;  '(variable-pitch
