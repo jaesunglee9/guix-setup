@@ -73,19 +73,32 @@
     (packages
      (append
       (operating-system-packages base-system)
-      (specifications->packages (list "qutebrowser"))))
+      (specifications->packages (list "firefox" "font-google-noto-sans-cjk"))))
 
     (services
-     (append
-      ;; (operating-system-services base-system)
-      (list
-        (service plasma-desktop-service-type)
-        (service openssh-service-type)
-        (service cups-service-type)
-        (set-xorg-configuration
-          (xorg-configuration
-            (keyboard-layout (operating-system-keyboard-layout base-system)))))
-      %desktop-services))))
+      (modify-services 
+	(append 
+	  (list 
+	    (service plasma-desktop-service-type)
+	    (service openssh-service-type)
+	    (service cups-service-type)
+	    (set-xorg-configuration 
+	      (xorg-configuration
+		(keyboard-layout (operating-system-keyboard-layout base-system)))))
+	  %desktop-services)
+	(guix-service-type config =>
+			   (guix-configuration
+			     (inherit config)
+			     (substitute-urls 
+			       (append
+				(list "https://substitutes.nonguix.org")
+				%default-substitute-urls))
+			     (authorized-keys
+			       (append
+				 (list (local-file "../../nonguix-signing-key.pub"))
+				 %default-authorized-guix-keys))))))))
+
+    
 
 (operating-system
   (inherit terminal-system)

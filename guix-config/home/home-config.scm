@@ -18,7 +18,7 @@
   (packages (specifications->packages (list "bash" "git" "zig"
                                             "emacs" "emacs-use-package"
                                             "emacs-org-roam" "emacs-emacsql" "emacs-magit" "emacs-projectile" "emacs-counsel-projectile"
-                                            "emacs-counsel" "emacs-ivy" "emacs-ivy-rich" "emacs-swiper" "emacs-which-key" "emacs-helpful" "emacs-paredit"
+                                            "emacs-counsel" "emacs-ivy" "emacs-ivy-rich" "emacs-swiper" "emacs-which-key" "emacs-helpful" "emacs-paredit" "emacs-transient"
                                             "emacs-gruvbox-theme" "emacs-mixed-pitch")))
 
   ;; Below is the list of Home services.  To search for available
