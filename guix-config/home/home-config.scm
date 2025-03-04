@@ -19,7 +19,8 @@
                                             "emacs" "emacs-use-package"
                                             "emacs-org-roam" "emacs-emacsql" "emacs-magit" "emacs-projectile" "emacs-counsel-projectile"
                                             "emacs-counsel" "emacs-ivy" "emacs-ivy-rich" "emacs-swiper" "emacs-which-key" "emacs-helpful" "emacs-paredit"
-                                            "emacs-gruvbox-theme" "emacs-mixed-pitch")))
+                                            "emacs-gruvbox-theme" "emacs-mixed-pitch"
+					    "font-et-book")))
 
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
