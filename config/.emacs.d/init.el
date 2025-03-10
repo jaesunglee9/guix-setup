@@ -1,17 +1,18 @@
+;; Except for packages, this config is generally procedural
+
+;; Startup 
 (setq inhibit-startup-message t)
 (setq debug-on-error t)
 
-(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups" user-emacs-directory))))
-;; auto-save-mode doesn't create path automatically
-(setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-      auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
-
+;; General looks setups
 (scroll-bar-mode -1)  ; Disable visible scrollbar
 (tool-bar-mode -1)  ; Disable the toolbar
 (tooltip-mode -1)  ; Disable tooltips
 (set-fringe-mode 10) ; Give some breathing room
 (set-face-attribute 'default nil :height 120)
 
+;; configuration of basic settings for certain modes
+;; column-number-setup
 (column-number-mode)
 (global-display-line-numbers-mode t)
 ;;Disable line numbers for some modes
@@ -21,11 +22,13 @@
 		eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
+(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups" user-emacs-directory))))
+;; auto-save-mode doesn't create path automatically
+(setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
+      auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+
 ;; (set-face-font 'variable-pitch "EtBembo")
 ;; (setq-default line-spacing 0.1)
-
-;; Initialize package sources
-;;(require 'package)
 
 ;;(setq package-archives
 ;;      '(("gnu elpa" . "https://elpa.gnu.org/packages/")
@@ -47,10 +50,17 @@
 ;;(unless (package-installed-p 'use-package)
 ;;  (package-install 'use-package))
 
-(add-to-list 'load-path "/home/user0/.guix-home/profile/share/emacs/site-lisp")
+(add-to-list 'load-path (expand-file-name "~/.guix-home/profile/share/emacs/site-lisp"))
+(add-to-list 'load-path (expand-file-name "~/.guix-profile/share/emacs/site-lisp/") t)
+
+(require 'guix-emacs)
 (guix-emacs-autoload-packages)
 
 (require 'use-package) ;; since guix takes care of packages, no need for :ensure t
+
+(require 'project)
+(require 'desktop)
+(setq desktop-dirname
 
 ;; packages.el
 (with-eval-after-load 'org
@@ -61,7 +71,7 @@
   :init (which-key-mode)
   :diminish which-key-mode
   :config
-  (setq which-key-idle-delay 0.3))
+  (setq which-key-idle-delay 0.2))
 
 (use-package swiper)
 
@@ -108,12 +118,12 @@
 
 ;; paredit
 (use-package paredit
-  :hook ((emacs-lisb-mode
+  :hook ((emacs-lisp-mode
           eval-expression-minibuffer-setup
           ielm-mode
           lisp-mode
           lisp-interaction-mode
-          scheme-mode). enable-paredit-mode))
+          scheme-mode) . enable-paredit-mode))
 
 ;; make eldoc paredit aware
 (use-package eldoc
@@ -158,7 +168,7 @@
   :config
   (setq org-agenda-files
 	'("~/org/"))
-  (setq org-agenta-tag-filter-preset '("-REFILE"))
+  (setq org-agenda-tag-filter-preset '("-REFILE"))
 
   (setq org-todo-keywords
 	'((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -197,7 +207,7 @@
 
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
-  (setq org-log-into-draw t)
+  (setq org-log-into-drawer t)
   (setq org-deadline-warning-days 0) ;; show all deadlines
   (setq org-archive-location "~/org/archive/journal.org::datetree/"))
 
