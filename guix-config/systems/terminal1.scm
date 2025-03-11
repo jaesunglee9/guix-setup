@@ -1,4 +1,4 @@
-;; configuration of terminal 2 machine, a thinkpad t420 model.
+;; configuration of terminal 1 machine, a thinkpad t480 model.
 
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
@@ -33,7 +33,7 @@
     ;; Packages installed for all systems.
     (packages
      (append
-      (specifications->packages (list "git" "neovim" "wget" "less" "htop"))
+      (specifications->packages (list "nss-certs" "git" "neovim" "wget" "less" "htop"))
       %base-packages))
 
     ;; Below is the list of system services.  To search for available
@@ -106,7 +106,7 @@
   (initrd microcode-initrd)
   (firmware (list sof-firmware linux-firmware))
 
-  (host-name "terminal2")
+  (host-name "terminal1")
 
   (bootloader (bootloader-configuration
                 (bootloader grub-bootloader)
