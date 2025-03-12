@@ -25,10 +25,6 @@ if [ -d "$HOME/.guix-home/profile/share/info" ]; then
 	export INFOPATH="$HOME/.guix-home/profile/share/info:$INFOPATH"
 fi
 
-# hopefully remove it later
-export JAVA_HOME=/usr/lib/jvm/java-22-openjdk
-export PATH=$JAVA_HOME/bin:$PATH
-
 # Automatically added by the Guix install script.
 if [ -n "$GUIX_ENVIRONMENT" ]; then
     if [[ $PS1 =~ (.*)"\\$" ]]; then

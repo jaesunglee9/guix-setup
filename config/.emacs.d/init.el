@@ -63,7 +63,6 @@
 
 (require 'project)
 (require 'desktop)
-(setq desktop-dirname
 
 ;; packages.el
 (with-eval-after-load 'org

@@ -109,8 +109,8 @@
   (host-name "terminal1")
 
   (bootloader (bootloader-configuration
-                (bootloader grub-bootloader)
-                (targets (list "/dev/sdb"))
+                (bootloader grub-efi-bootloader)
+                (targets (list "/boot/efi"))
                 (keyboard-layout (operating-system-keyboard-layout terminal-system))))
 
   ;; The list of file systems that get "mounted".  The unique
@@ -119,6 +119,11 @@
   (file-systems (cons* (file-system
                          (mount-point "/")
                          (device (uuid
-                                  "e45a594e-0627-4979-9751-b3f33c9989f5"
+                                  "b43eb8f2-df43-4077-8716-a43709329c15"
                                   'ext4))
-                         (type "ext4")) %base-file-systems)))
+                         (type "ext4"))
+                       (file-system
+                         (mount-point "/boot/efi")
+                         (device (uuid "F85B-F2AD"
+                                       'fat32))
+                         (type "vfat")) %base-file-systems)))
