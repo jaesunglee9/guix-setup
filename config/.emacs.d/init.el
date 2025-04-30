@@ -169,7 +169,7 @@
 (use-package org
   :config
   (setq org-agenda-files
-	'("~/org/"))
+	'("~/projects/private/org/"))
   (setq org-agenda-tag-filter-preset '("-REFILE"))
 
   (setq org-todo-keywords
@@ -185,33 +185,33 @@
 	  ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
 	  ("DONE" ("WAITING") ("CANCELLED") ("HOLD"))))
 
-  (setq org-directory "~/org")
-  (setq org-default-notes-file "~/org/refile.org")
+  (setq org-directory "~/projects/private/org")
+  (setq org-default-notes-file "~/projects/private/org/refile.org")
 
   ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
   (setq org-capture-templates
-	'(("t" "todo" entry (file "~/org/refile.org")
+	'(("t" "todo" entry (file "~/projects/private/org/refile.org")
 	   "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-	  ("r" "respond" entry (file "~/org/refile.org")
+	  ("r" "respond" entry (file "~/projects/private/org/refile.org")
 	   "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-	  ("n" "note" entry (file "~/org/refile.org")
+	  ("n" "note" entry (file "~/projects/private/org/refile.org")
 	   "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-	  ("j" "JOURNAL" entry (file "~/org/refile.org")
+	  ("j" "JOURNAL" entry (file "~/projects/private/org/refile.org")
 	   "* %?\n%U\n" :clock-in t :clock-resume t)
-	  ("w" "org-protocol" entry (file "~/org/refile.org")
+	  ("w" "org-protocol" entry (file "~/projects/private/org/refile.org")
 	   "* TODO Review %c\n%U\n" :immediate-finish t)
-	  ("m" "MEETING" entry (file "~/org/refile.org")
+	  ("m" "MEETING" entry (file "~/projects/private/org/refile.org")
 	   "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-	  ("p" "Phone call" entry (file "~/org/refile.org")
+	  ("p" "Phone call" entry (file "~/projects/private/org/refile.org")
 	   "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-	  ("h" "Habit" entry (file "~/org/refile.org")
+	  ("h" "Habit" entry (file "~/projects/private/org/refile.org")
  	   "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")))
 
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-deadline-warning-days 0) ;; show all deadlines
-  (setq org-archive-location "~/org/archive/journal.org::datetree/"))
+  (setq org-archive-location "~/projects/private/org/archive/journal.org::datetree/"))
 
 ;; org keys
 (global-set-key (kbd "C-c l") #'org-store-link)
@@ -252,7 +252,7 @@
   :init
   (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory "~/org/org-roam")
+  (org-roam-directory "~/projects/private/org/org-roam")
   :bind (("C-c n l" . org-roam-buffer-toggle)
 	 ("C-c n f" . org-roam-node-find)
 	 ("C-c n i" . org-roam-node-insert))
