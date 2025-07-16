@@ -1,0 +1,1 @@
+(list (channel (name 'local-packages) (url ".")))
