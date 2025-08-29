@@ -9,8 +9,8 @@
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-alias update-system='sudo guix system -L ~/projects/public/guix-setup reconfigure ~/projects/public/guix-setup/guix-config/systems/$(hostname).scm'
-alias update-home='guix home -L ~/projects/public/guix-setup reconfigure ~/projects/public/guix-setup/guix-config/home/home-config.scm'
+alias update-system='sudo -E guix system -L ~/projects/public/guix-setup reconfigure ~/projects/public/guix-setup/config/systems/$(hostname).scm'
+alias update-home='guix home -L ~/projects/public/guix-setup reconfigure ~/projects/public/guix-setup/config/home/home-config.scm'
 # PS1='[\u@\h \W]\$ '
 
 source ~/.guix-home/profile/bin/git-prompt
