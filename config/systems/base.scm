@@ -29,17 +29,10 @@
   #:use-module (gnu packages firmware)
   #:use-module (nongnu packages linux)
   
-  #:export (base
-	    base-system
+  #:export (base-system
 	    terminal-system
 	    server-system
-	    unique-specs->packages
-	    %nonguix-key))
-
-(define %nonguix-key
-  (local-file (string-append (dirname (current-filename))
-                             "/../../keys/nonguix-signing-key.pub")
-              "nonguix-signing-key.pub"))
+	    unique-specs->packages))
 
 ;; Convenience: turn spec strings into unique package list, avoiding duplicates.
 ;; Normalize spec items to a package object.
@@ -142,7 +135,8 @@
 			    %default-substitute-urls))
 			  (authorized-keys
 			   (append
-			    (list %nonguix-key)
+			    (list
+			     (local-file "../../keys/nonguix-signing-key.pub"))
 			    %default-authorized-guix-keys))))))
 
     (firmware
