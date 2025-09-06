@@ -35,11 +35,11 @@
   (file-systems (cons* (file-system
                          (mount-point "/")
                          (device (uuid
-                                  "b43eb8f2-df43-4077-8716-a43709329c15"
+                                  "b2246e27-eeda-4cb4-81dc-3bc917037684"
                                   'ext4))
                          (type "ext4"))
                        (file-system
                          (mount-point "/boot/efi")
-                         (device (uuid "F85B-F2AD"
+                         (device (uuid "2F79-5A20"
                                        'fat32))
                          (type "vfat")) %base-file-systems)))
