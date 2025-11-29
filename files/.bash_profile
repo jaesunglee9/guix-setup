@@ -21,6 +21,9 @@ fi
 export EDITOR=nvim
 export VISUAL=nvim
 
+export PATH="$PATH:$HOME/tmp"
+
+
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 
