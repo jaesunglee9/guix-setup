@@ -14,7 +14,9 @@
   #:use-module (gnu services desktop)
   #:use-module (gnu services networking)
   #:use-module (gnu services xorg)
-  #:use-module (gnu services virtualization))
+  #:use-module (gnu services virtualization)
+  #:use-module (gnu services docker)
+  #:use-module (packages docker))
 
 (define (add-groups-to-user username new-groups users)
   (map (lambda (u)
@@ -53,6 +55,9 @@
 		  (libvirt-configuration
 		   (unix-sock-group "libvirt")))
 	 (service virtlog-service-type)
+	 (service docker-service-type 
+                 (docker-configuration
+                   (package docker-static)))
 	 (operating-system-user-services terminal-system)))
 
  ;; The list of file systems that get "mounted".  The unique

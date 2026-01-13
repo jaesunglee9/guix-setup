@@ -1,4 +1,4 @@
-(define-module (docker-binary)
+(define-module (config packages docker-binary)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system copy)

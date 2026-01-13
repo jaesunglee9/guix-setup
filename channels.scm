@@ -19,4 +19,4 @@
       (channel
 	(name 'my-setup) ;; You can name this whatever you want
 	(url "file:///home/user0/projects/public/guix-setup") ;; Path to repo root
-	(branch "master")))
+	(branch "main")))
