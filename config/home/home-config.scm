@@ -37,11 +37,12 @@
     (service home-dotfiles-service-type
               (home-dotfiles-configuration
                 (directories '("../../files"))))
+    
     (service home-gpg-agent-service-type
 	     (home-gpg-agent-configuration
-	      (pinentry-program
-	       (file-append pinentry "/bin/pinentry"))
-	      (extra-content "allow-loopback-pinentry"))))))
+	       (pinentry-program
+		(file-append pinentry "/bin/pinentry"))
+	       (extra-content "allow-loopback-pinentry"))))))
 
 
 

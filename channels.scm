@@ -19,6 +19,6 @@
           (openpgp-fingerprint
            "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
       (channel
-	(name 'my-setup) ;; You can name this whatever you want
+	(name 'user0) ;; You can name this whatever you want
 	(url "file:///home/user0/projects/public/guix-setup") ;; Path to repo root
 	(branch "main")))
