@@ -65,8 +65,12 @@
     (bootloader (bootloader-configuration
                  (bootloader grub-efi-bootloader)   ; use BIOS to avoid EFI mount requirement
                  (targets '("placeholder"))))           ; dummy device; will be overridden
-
-    (file-systems %base-file-systems)            ; minimal default; will be overridden
+    
+    (file-systems (cons (file-system
+                          (mount-point "/")
+                          (device "dummy-root")
+                          (type "dummy"))
+                        %base-file-systems))           ; minimal default; will be overridden
 
     (users (cons* (user-account
                    (name "user0")
@@ -150,7 +154,6 @@
   (operating-system
     (inherit base-system)
 
-    ;; Server tools on top of base (adjust to your taste).
     (packages
      (append
       (operating-system-packages base-system)

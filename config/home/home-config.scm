@@ -1,4 +1,5 @@
 
+
 ;; This "home-environment" file can be passed to 'guix home reconfigure'
 ;; to reproduce the content of your profile.  This is "symbolic": it only
 ;; specifies package names.  To reproduce the exact same profile, you also
@@ -15,7 +16,8 @@
   #:use-module (gnu home services shepherd)
   #:use-module (gnu home services shells)
   #:use-module (gnu home services dotfiles)
-  #:use-module (gnu home services gnupg))
+  #:use-module (gnu home services gnupg)
+  #:use-module (gnu packages gnupg))
 
 (home-environment
   ;; Below is the list of packages that will show up in your
@@ -36,7 +38,10 @@
               (home-dotfiles-configuration
                 (directories '("../../files"))))
     (service home-gpg-agent-service-type
-	     (home-gpg-agent-configuration)))))
+	     (home-gpg-agent-configuration
+	      (pinentry-program
+	       (file-append pinentry "/bin/pinentry"))
+	      (extra-content "allow-loopback-pinentry"))))))
 
 
 

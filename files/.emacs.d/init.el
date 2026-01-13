@@ -4,7 +4,11 @@
 (setq inhibit-startup-message t)
 (setq debug-on-error t)
 
+;; pinentry
+(setq epg-pinentry-mode 'loopback)
+
 ;; General looks setups
+(menu-bar-mode -1)
 (scroll-bar-mode -1)  ; Disable visible scrollbar
 (tool-bar-mode -1)  ; Disable the toolbar
 (tooltip-mode -1)  ; Disable tooltips
@@ -211,7 +215,7 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-deadline-warning-days 0) ;; show all deadlines
-  (setq org-archive-location "~/projects/org/archive/journal.org::datetree/"))
+  (setq org-archive-location "~/projects/org/archive/diary.org::datetree/"))
 
 ;; org keys
 (global-set-key (kbd "C-c l") #'org-store-link)
@@ -251,8 +255,35 @@
 (use-package org-roam
   :init
   (setq org-roam-v2-ack t)
+  
   :custom
-  (org-roam-directory "~/projects/private/org/org-roam")
+  (org-roam-directory "~/projects/org/roam")
+  
+  (org-roam-capture-templates
+	'(("m" "main" plain
+           "%?"
+           :if-new
+	   (file+head "main/${slug}.org"
+                      "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+	
+          ("r" "reference" plain
+	   "%?"
+           :if-new
+           (file+head "reference/${title}.org"
+		      "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+	  
+	  ("p" "programming" plain
+	   "%?"
+	   :if-new
+	   (file+head "programming/${title}.org"
+		      "#+title: ${title}\n")
+	   :immediate-finish t
+	   :unnarrowed t)))
+  
   :bind (("C-c n l" . org-roam-buffer-toggle)
 	 ("C-c n f" . org-roam-node-find)
 	 ("C-c n i" . org-roam-node-insert))

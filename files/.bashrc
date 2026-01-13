@@ -12,7 +12,7 @@ alias grep='grep --color=auto'
 alias update-system='sudo -E guix system -L ~/projects/public/guix-setup reconfigure ~/projects/public/guix-setup/config/systems/$(hostname).scm'
 alias update-home='guix home -L ~/projects/public/guix-setup reconfigure ~/projects/public/guix-setup/config/home/home-config.scm'
 
-# PS1='[\u@\h \W]\$ '
+export GPG_TTY=$(tty)
 
 export PATH="$PATH:$HOME/tmp"
 

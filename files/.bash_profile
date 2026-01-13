@@ -21,6 +21,8 @@ fi
 export EDITOR=nvim
 export VISUAL=nvim
 
+export XMODIFIERS=@im=fcitx
+
 export PATH="$PATH:$HOME/tmp"
 
 
