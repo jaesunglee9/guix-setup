@@ -24,10 +24,9 @@
      `(#:install-plan
        ;; The tarball extracts to a "docker" directory containing the binaries.
        ;; We tell Guix: "Copy everything from the current directory (.) to bin/ in the output."
-       '(("." "bin/")))) 
+       '(("docker/" "bin/")))) 
     (home-page "https://www.docker.com")
     (synopsis "Docker Static Binary")
     (description "Docker Engine static binaries for Linux.")
     (license licenses:asl2.0)))
     
-docker-static
