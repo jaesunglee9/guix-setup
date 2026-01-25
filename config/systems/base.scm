@@ -162,17 +162,29 @@
     ;; Harden SSH; add a simple firewall and keep it headless (no %desktop-services).
     (services
      (append
-      (modify-services (operating-system-services base-system)
+      (modify-services (operating-system-user-services base-system)
         (openssh-service-type
          config => (openssh-configuration
                     (inherit config)
                     (password-authentication? #f) ; key-only by default
-                    (permit-root-login 'no))))
+                    (permit-root-login 'no)))
+	(guix-service-type config =>
+			   (guix-configuration
+			    (inherit config)
+			    (substitute-urls 
+			     (append
+			      (list "https://substitutes.nonguix.org")
+			      %default-substitute-urls))
+			    (authorized-keys
+			     (append
+			      (list
+			       (local-file "../../keys/nonguix-signing-key.pub"))
+			      %default-authorized-guix-keys)))))
       (list
        ;; simple-firewall is under (gnu services networking)
        (service simple-firewall-service-type
                 (simple-firewall-configuration
-                 (open-ports '(22)))))  ; open only SSH by default
-      '()))))
+                 (open-ports '(22)))))))
+    ))
 
 

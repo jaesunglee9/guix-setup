@@ -9,22 +9,23 @@
 
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
-(define-module (config systems server0)
-  #:use-module (gnu)
-  #:use-module (guix)
-  #:use-module (config systems base)
-  #:use-module (gnu packages ssh)
-  #:use-module (nongnu packages linux)
-  #:use-module (nongnu system linux-initrd)
-  #:use-module (gnu services cups)
-  #:use-module (gnu services ssh)
-  #:use-module (gnu services desktop)
-  #:use-module (gnu services networking)
-  #:use-module (gnu services xorg))
-
+(use-modules (gnu))
+(use-service-modules cups desktop networking ssh xorg)
 
 (operating-system
-  (inherit server-system)
+  (locale "en_US.utf8")
+  (timezone "Asia/Seoul")
+  (keyboard-layout (keyboard-layout "us"))
+  (host-name "server0")
+
+  ;; The list of user accounts ('root' is implicit).
+  (users (cons* (user-account
+                  (name "user0")
+                  (comment "user0")
+                  (group "users")
+                  (home-directory "/home/user0")
+                  (supplementary-groups '("wheel" "netdev" "audio" "video")))
+                %base-user-accounts))
 
   ;; Packages installed system-wide.  Users can also install packages
   ;; under their own account: use 'guix search KEYWORD' to search
@@ -51,7 +52,7 @@
 			    (port 8080)
 			    (advertise? #t)
 			    (nar-path "/var/cache/guix/publish")
-			    (workers 2)
+			    (workers 3)
 			    (secret-key-file "/root/.config/guix/signing-key.sec")
 			    (public-key-file "/root/.config/guix/signing-key.pub")
 			    (compression-level 3)
@@ -59,12 +60,11 @@
 
            ;; This is the default list of services we
            ;; are appending to.
-           (operating-system-user-services server-system))))
-
+           %base-services)))
   (bootloader (bootloader-configuration
-               (bootloader grub-efi-bootloader)
-               (targets (list "/boot/efi"))
-               (keyboard-layout keyboard-layout)))
+                (bootloader grub-efi-bootloader)
+                (targets (list "/boot/efi"))
+                (keyboard-layout keyboard-layout)))
   (swap-devices (list (swap-space
                         (target (uuid
                                  "485b94b8-82a3-44bd-84f5-894a2988b882")))))
