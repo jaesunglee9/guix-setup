@@ -9,77 +9,61 @@
 
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
-(define-module (config systems server0)
-  #:use-module (gnu)
-  #:use-module (guix)
-  #:use-module (config systems base)
-  #:use-module (gnu packages ssh)
-  #:use-module (nongnu packages linux)
-  #:use-module (nongnu system linux-initrd)
-  #:use-module (gnu services cups)
-  #:use-module (gnu services ssh)
-  #:use-module (gnu services desktop)
-  #:use-module (gnu services networking)
-  #:use-module (gnu services xorg))
+(use-modules (gnu)
+	     (guix)
+	     (config systems base)
+	     (gnu packages ssh)
+	     (gnu services cups)
+	     (nongnu packages linux)
+	     (nongnu system linux-initrd)
+	     (gnu services ssh)
+	     (gnu services desktop)
+	     (gnu services networking)
+	     (gnu services xorg)
+	     (gnu services avahi))
 
 
 (operating-system
-  (inherit server-system)
+ (inherit server-system)
 
-  ;; Packages installed system-wide.  Users can also install packages
-  ;; under their own account: use 'guix search KEYWORD' to search
-  ;; for packages and 'guix install PACKAGE' to install a package.
-  (packages (append (list (specification->package "nss-certs"))
-                    %base-packages))
+ ;; Below is the list of system services.  To search for available
+ ;; services, run 'guix system search KEYWORD' in a terminal.
+ (services
+  (append (list
 
-  ;; Below is the list of system services.  To search for available
-  ;; services, run 'guix system search KEYWORD' in a terminal.
-  (services
-   (append (list
+           ;; To configure OpenSSH, pass an 'openssh-configuration'
+           ;; record as a second argument to 'service' below.
+	   (service dhcpcd-service-type)
+	   (service avahi-service-type)
+           (service ntp-service-type)
+	   (service guix-publish-service-type
+		    (guix-publish-configuration
+		     (host "0.0.0.0")
+		     (port 8080)
+		     (advertise? #t)
+		     (nar-path "/var/cache/guix/publish")
+		     (workers 2))))
+	  (operating-system-user-services server-system)))
 
-                 ;; To configure OpenSSH, pass an 'openssh-configuration'
-                 ;; record as a second argument to 'service' below.
-                 (service openssh-service-type
-			  (openssh-configuration
-			    (password-authentication? #t)
-			    (permit-root-login 'without-password)))
-                 (service dhcp-client-service-type)
-                 (service ntp-service-type)
-		 (service guix-publish-service-type
-			  (guix-publish-configuration
-			    (host "0.0.0.0")
-			    (port 8080)
-			    (advertise? #t)
-			    (nar-path "/var/cache/guix/publish")
-			    (workers 2)
-			    (secret-key-file "/root/.config/guix/signing-key.sec")
-			    (public-key-file "/root/.config/guix/signing-key.pub")
-			    (compression-level 3)
-			    ))
+ (bootloader (bootloader-configuration
+              (bootloader grub-efi-bootloader)
+              (targets (list "/boot/efi"))
+              (keyboard-layout (operating-system-keyboard-layout server-system))))
+ (swap-devices (list (swap-space
+                      (target (uuid
+                               "485b94b8-82a3-44bd-84f5-894a2988b882")))))
 
-           ;; This is the default list of services we
-           ;; are appending to.
-           (operating-system-user-services server-system))))
-
-  (bootloader (bootloader-configuration
-               (bootloader grub-efi-bootloader)
-               (targets (list "/boot/efi"))
-               (keyboard-layout keyboard-layout)))
-  (swap-devices (list (swap-space
-                        (target (uuid
-                                 "485b94b8-82a3-44bd-84f5-894a2988b882")))))
-
-  ;; The list of file systems that get "mounted".  The unique
-  ;; file system identifiers there ("UUIDs") can be obtained
-  ;; by running 'blkid' in a terminal.
-  (file-systems (cons* (file-system
-                         (mount-point "/")
-                         (device (uuid
-                                  "6f3b122d-7b27-4fc7-9f48-9e6f4ce6f496"
-                                  'ext4))
-                         (type "ext4"))
-                       (file-system
-                         (mount-point "/boot/efi")
-                         (device (uuid "D199-F929"
-                                       'fat32))
-                         (type "vfat")) %base-file-systems)))
+ ;; The list of file systems that get "mounted".  The unique
+ ;; file system identifiers there ("UUIDs") can be obtained
+ ;; by running 'blkid' in a terminal.
+ (file-systems (cons* (file-system
+                       (mount-point "/")
+                       (device (uuid
+                                "6f3b122d-7b27-4fc7-9f48-9e6f4ce6f496"
+                                'ext4))
+                       (type "ext4"))
+                      (file-system
+                       (mount-point "/boot/efi")
+                       (device (uuid "D199-F929"
+                                     'fat32))
+                       (type "vfat")) %base-file-systems)))

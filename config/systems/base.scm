@@ -150,7 +150,7 @@
 ;; ------------------------
 ;; Server (headless)
 ;; ------------------------
-(define server-system
+(define-public server-system
   (operating-system
     (inherit base-system)
 
@@ -167,7 +167,7 @@
          config => (openssh-configuration
                     (inherit config)
                     (password-authentication? #f) ; key-only by default
-                    (permit-root-login 'no)))
+                    (permit-root-login 'prohibit-password)))
 	(guix-service-type config =>
 			   (guix-configuration
 			    (inherit config)
@@ -182,9 +182,29 @@
 			      %default-authorized-guix-keys)))))
       (list
        ;; simple-firewall is under (gnu services networking)
-       (service simple-firewall-service-type
-                (simple-firewall-configuration
-                 (open-ports '(22)))))))
-    ))
+       (service nftables-service-type
+                (nftables-configuration
+                 (ruleset
+		  (plain-file "nftables.conf"
+		  " 
+table inet filter {
+  chain input {
+    type filter hook input priority 0; policy drop;
+
+    # Allow traffic from loopback (localhost)
+    iifname \"lo\" accept
+
+    # Allow established connections (so the server can reply)
+    ct state established,related accept
+
+    # Allow SSH (Port 22)
+    tcp dport 22 accept
+
+    # Allow ICMP (Ping) - Optional, good for debugging
+    ip protocol icmp accept
+    ip6 nexthdr icmpv6 accept
+  }
+}
+")))))))))
 
 
