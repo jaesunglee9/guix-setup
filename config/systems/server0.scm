@@ -26,6 +26,13 @@
 (operating-system
  (inherit server-system)
 
+ (bootloader (bootloader-configuration
+              (bootloader grub-efi-bootloader)
+              (targets (list "/boot/efi"))
+              (keyboard-layout (operating-system-keyboard-layout server-system))))
+
+
+ (host-name "server0")
  ;; Below is the list of system services.  To search for available
  ;; services, run 'guix system search KEYWORD' in a terminal.
  (services
@@ -45,10 +52,7 @@
 		     (workers 2))))
 	  (operating-system-user-services server-system)))
 
- (bootloader (bootloader-configuration
-              (bootloader grub-efi-bootloader)
-              (targets (list "/boot/efi"))
-              (keyboard-layout (operating-system-keyboard-layout server-system))))
+
  (swap-devices (list (swap-space
                       (target (uuid
                                "485b94b8-82a3-44bd-84f5-894a2988b882")))))
