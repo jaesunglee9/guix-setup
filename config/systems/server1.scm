@@ -10,6 +10,8 @@
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
 (use-modules (gnu)
+	     (gnu system)
+	     (gnu services)
 	     (guix)
 	     (config systems base)
 	     (gnu packages ssh)
@@ -20,7 +22,9 @@
 	     (gnu services desktop)
 	     (gnu services networking)
 	     (gnu services xorg)
-	     (gnu services avahi))
+	     (gnu services avahi)
+	     (gnu services web)
+	     (gnu services certbot))
 
 
 (operating-system
@@ -32,10 +36,11 @@
               (keyboard-layout (operating-system-keyboard-layout server-system))))
 
 
- (host-name "server0")
+ (host-name "server1")
  ;; Below is the list of system services.  To search for available
  ;; services, run 'guix system search KEYWORD' in a terminal.
  (services
+   (modify-services
   (append (list
 
            ;; To configure OpenSSH, pass an 'openssh-configuration'
@@ -43,14 +48,45 @@
 	   (service dhcpcd-service-type)
 	   (service avahi-service-type)
            (service ntp-service-type)
+	   (service nginx-service-type
+		    (nginx-configuration
+		      (server-blocks
+			(list (nginx-server-configuration
+				(server-name '("localhost"))
+				(listen '("80"))
+				(ssl-certificate #f)
+				(ssl-certificate-key #f)
+				(root "/srv/http/my-blog")
+				(index '("index.html")))))))
+
 	   (service guix-publish-service-type
 		    (guix-publish-configuration
 		     (host "0.0.0.0")
 		     (port 8080)
 		     (advertise? #t)
 		     (nar-path "/var/cache/guix/publish")
-		     (workers 2))))
-	  (operating-system-user-services server-system)))
+		     (workers 2))))	   
+	  (operating-system-user-services server-system))
+
+  (nftables-service-type config =>
+		    (nftables-configuration
+		      (ruleset (plain-file "nftables.conf"
+					   "table inet filter {
+                                             chain input {
+                                               type filter hook input priority 0; policy drop;
+                                               iifname \"lo\" accept
+                                               ct state { established, related } accept
+                                   
+                                               # Open doors for your services
+                                               tcp dport 22 accept   # SSH
+                                               tcp dport 80 accept   # Nginx (Your Blog!)
+                                               tcp dport 8080 accept # Guix Publish
+                                   
+                                               # Allow pings for debugging
+                                               ip protocol icmp accept
+                                               ip6 nexthdr ipv6-icmp accept
+                                             }
+                                           }"))))))
 
 
  (swap-devices (list (swap-space
