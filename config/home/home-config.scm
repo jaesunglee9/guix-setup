@@ -29,7 +29,7 @@
 					    "emacs-geiser" "emacs-geiser-guile"
                                             "emacs-counsel" "emacs-ivy" "emacs-ivy-rich" "emacs-swiper" "emacs-which-key" "emacs-helpful" "emacs-paredit"
                                             "emacs-gruvbox-theme" "emacs-mixed-pitch"
-					    "font-et-book")))
+					    "font-et-book" "emacs-ox-tufte")))
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
   (services
